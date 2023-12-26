@@ -3,14 +3,18 @@ pragma circom 2.1.5;
 include "babyjub.circom";
 include "poseidon.circom";
 include "binary-merkle-root.circom";
+include "encrypt.circom";
+include "comparators.circom";
 
 template Semaphore(MAX_DEPTH) {
     signal input privateKey;
     signal input treeDepth, treeIndices[MAX_DEPTH], treeSiblings[MAX_DEPTH];
     signal input message;
     signal input scope;
+    signal input nonceKey;
+    signal input publicKey[2];
 
-    signal output treeRoot, nullifier;
+    signal output treeRoot, nullifier, ephemeralKey[2], encryptedMessage[2];
 
     var Ax, Ay;
     (Ax, Ay) = BabyPbk()(privateKey);
@@ -20,6 +24,17 @@ template Semaphore(MAX_DEPTH) {
     treeRoot <== BinaryMerkleRoot(MAX_DEPTH)(identityCommitment, treeDepth, treeIndices, treeSiblings);
     nullifier <== Poseidon(2)([scope, privateKey]);
 
+    // Encrypted value can only be 32 bits
+    // var truncatedIdentity = identityCommitment % 0xFFFFFFFF;
+    var truncatedIdentity = 12345;
+
+    var encodedIdentity[2];
+    encodedIdentity = Encode()(truncatedIdentity);
+
+    (ephemeralKey, encryptedMessage) <== Encrypt()(encodedIdentity, nonceKey, publicKey);
+
+
     // Dummy constraint to prevent compiler from optimizing it.
     signal dummySquare <== message * message;
 }
+

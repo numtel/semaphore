@@ -17,6 +17,7 @@
     },
     "scripts": {
         "compile": "circomkit compile semaphore",
+        "contract": "circomkit contract semaphore",
         "setup": "circomkit setup semaphore",
         "test": "mocha"
     },
@@ -25,7 +26,8 @@
     },
     "dependencies": {
         "@zk-kit/circuits": "0.2.3",
-        "circomlib": "2.0.5"
+        "circomlib": "2.0.5",
+        "ec-elgamal-circom": "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.6",
