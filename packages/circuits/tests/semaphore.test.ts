@@ -1,15 +1,13 @@
 // @ts-nocheck
-
+import assert from "assert";
 import { derivePublicKey, deriveSecretScalar } from "@zk-kit/eddsa-poseidon"
 import { LeanIMT } from "@zk-kit/imt"
 import { WitnessTester } from "circomkit"
 import { poseidon2 } from "poseidon-lite"
 import { circomkit } from "./common"
 
-import { ExtPointType } from "@noble/curves/abstract/edwards";
-import * as elgamal from "ec-elgamal-circom/src";
-import * as tools from "ec-elgamal-circom/utils/tools";
-import * as decode from "ec-elgamal-circom/utils/decode";
+import { genKeypair, encrypt, decrypt } from "ec-elgamal-circom/src";
+import { encode, decode} from "ec-elgamal-circom/utils/decode";
 
 describe("semaphore", () => {
     let circuit: WitnessTester<
@@ -53,17 +51,17 @@ describe("semaphore", () => {
 
 
     // Encrypted value can only be 32 bits
-    //const identityCommitment = leaf & 0xFFFFFFFFn;
-    const identityCommitment = 12345n;
-    const ecKeypair = elgamal.genKeypair();
-    const encodedMsg = decode.encode(identityCommitment);
-    const encryption = elgamal.encrypt(ecKeypair.pubKey, encodedMsg);
-    const decrypted_message = elgamal.decrypt(
+    const identityCommitment = leaf & 0xFFFFFFFFn;
+    const ecKeypair = genKeypair();
+    const encodedMsg = encode(identityCommitment);
+    const encryption = encrypt(ecKeypair.pubKey, encodedMsg);
+    const decrypted_message = decrypt(
         ecKeypair.privKey,
         encryption.ephemeral_key,
         encryption.encrypted_message,
     );
-    const decodedMsg = decode.decode(decrypted_message, 19);
+    const decodedMsg = decode(decrypted_message, 19);
+    assert.strictEqual(identityCommitment, decodedMsg);
 
     const INPUT = {
         privateKey: deriveSecretScalar(privateKey),

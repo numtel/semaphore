@@ -4,7 +4,6 @@ include "babyjub.circom";
 include "poseidon.circom";
 include "binary-merkle-root.circom";
 include "encrypt.circom";
-include "comparators.circom";
 
 template Semaphore(MAX_DEPTH) {
     signal input privateKey;
@@ -25,14 +24,17 @@ template Semaphore(MAX_DEPTH) {
     nullifier <== Poseidon(2)([scope, privateKey]);
 
     // Encrypted value can only be 32 bits
-    // var truncatedIdentity = identityCommitment % 0xFFFFFFFF;
-    var truncatedIdentity = 12345;
+    var idBits[254] = Num2Bits(254)(identityCommitment);
+    var truncatedIdBits[32];
+    for(var i = 0; i<32; i++) {
+        truncatedIdBits[i] = idBits[i];
+    }
+    var truncatedIdentity = Bits2Num(32)(truncatedIdBits);
 
     var encodedIdentity[2];
     encodedIdentity = Encode()(truncatedIdentity);
 
     (ephemeralKey, encryptedMessage) <== Encrypt()(encodedIdentity, nonceKey, publicKey);
-
 
     // Dummy constraint to prevent compiler from optimizing it.
     signal dummySquare <== message * message;
