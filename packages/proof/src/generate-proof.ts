@@ -3,6 +3,8 @@ import { BytesLike, Hexable } from "@ethersproject/bytes"
 import { Group } from "@semaphore-protocol/group"
 import type { Identity } from "@semaphore-protocol/identity"
 import { NumericString, prove } from "@zk-kit/groth16"
+import { encrypt } from "ec-elgamal-circom/src";
+import { encode } from "ec-elgamal-circom/utils/decode";
 import getSnarkArtifacts from "./get-snark-artifacts.node"
 import hash from "./hash"
 import packProof from "./pack-proof"
@@ -23,6 +25,7 @@ export default async function generateProof(
     group: Group,
     message: BytesLike | Hexable | number | bigint,
     scope: BytesLike | Hexable | number | bigint,
+    publicKey: any,
     treeDepth?: number,
     snarkArtifacts?: SnarkArtifacts
 ): Promise<SemaphoreProof> {
@@ -51,6 +54,12 @@ export default async function generateProof(
         }
     }
 
+
+    // Encrypted value can only be 32 bits
+    const identityCommitment = BigInt(identity.commitment) & 0xFFFFFFFFn;
+    const encodedMsg = encode(identityCommitment);
+    const encryption = encrypt(publicKey, encodedMsg);
+
     const { proof, publicSignals } = await prove(
         {
             privateKey: identity.secretScalar,
@@ -58,7 +67,12 @@ export default async function generateProof(
             treeIndices,
             treeSiblings,
             scope: hash(scope),
-            message: hash(message)
+            message: hash(message),
+            nonceKey: encryption.nonce,
+            publicKey: [
+                publicKey.x,
+                publicKey.y
+            ],
         },
         snarkArtifacts.wasmFilePath,
         snarkArtifacts.zkeyFilePath
@@ -67,8 +81,11 @@ export default async function generateProof(
     return {
         treeRoot: publicSignals[0],
         nullifier: publicSignals[1],
+        ephemeralKey: [publicSignals[2], publicSignals[3]],
+        encryptedMessage: [publicSignals[4], publicSignals[5]],
         message: BigNumber.from(message).toString() as NumericString,
         scope: BigNumber.from(scope).toString() as NumericString,
+        publicKey,
         proof: packProof(proof)
     }
 }

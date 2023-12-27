@@ -11,6 +11,9 @@ export type SemaphoreProof = {
     treeRoot: NumericString
     message: NumericString
     nullifier: NumericString
+    ephemeralKey: any
+    encryptedMessage: any
+    publicKey: any
     scope: NumericString
     proof: PackedProof
 }
