@@ -6,6 +6,7 @@ import { SemaphoreProof, generateProof } from "@semaphore-protocol/proof"
 import { expect } from "chai"
 import { Signer, constants } from "ethers"
 import { run } from "hardhat"
+import { genKeypair } from "ec-elgamal-circom/src";
 import { Semaphore } from "../build/typechain"
 import { createIdentityCommitments } from "./utils"
 
@@ -210,25 +211,51 @@ describe("Semaphore", () => {
         const identity = new Identity("0")
 
         const group = new Group()
+        const ecKeypair = genKeypair();
 
         group.addMembers(members)
 
         let fullProof: SemaphoreProof
+        let decryptables
 
         before(async () => {
             await semaphoreContract.addMembers(groupId, [members[1], members[2]])
 
-            fullProof = await generateProof(identity, group, message, group.root as string, 10)
+            fullProof = await generateProof(identity, group, message, group.root as string, ecKeypair.pubKey, 20)
+            decryptables = [
+              fullProof.ephemeralKey[0],
+              fullProof.ephemeralKey[1],
+              fullProof.encryptedMessage[0],
+              fullProof.encryptedMessage[1],
+              fullProof.publicKey.x,
+              fullProof.publicKey.y,
+            ]
         })
 
         it("Should not verify a proof if the group does not exist", async () => {
-            const transaction = semaphoreContract.verifyProof(10, 1, 0, message, 0, [0, 0, 0, 0, 0, 0, 0, 0])
+            const transaction = semaphoreContract.verifyProof(
+              10,
+              1,
+              0,
+              message,
+              0,
+              decryptables,
+              [0, 0, 0, 0, 0, 0, 0, 0]
+            )
 
             await expect(transaction).to.be.revertedWithCustomError(semaphoreContract, "Semaphore__GroupDoesNotExist")
         })
 
         it("Should not verify a proof if the Merkle tree root is not part of the group", async () => {
-            const transaction = semaphoreContract.verifyProof(2, 1, 0, message, 0, [0, 0, 0, 0, 0, 0, 0, 0])
+            const transaction = semaphoreContract.verifyProof(
+              2,
+              1,
+              0,
+              message,
+              0,
+              decryptables,
+              [0, 0, 0, 0, 0, 0, 0, 0]
+            )
 
             await expect(transaction).to.be.revertedWithCustomError(
                 semaphoreContract,
@@ -243,6 +270,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 0,
+                decryptables,
                 fullProof.proof
             )
 
@@ -256,6 +284,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
+                decryptables,
                 fullProof.proof
             )
 
@@ -278,6 +307,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
+                decryptables,
                 fullProof.proof
             )
 
@@ -293,7 +323,7 @@ describe("Semaphore", () => {
 
             group.addMembers([members[0], members[1]])
 
-            const fullProof = await generateProof(identity, group, message, group.root as string, 10)
+            const fullProof = await generateProof(identity, group, message, group.root as string, ecKeypair.pubKey, 20)
 
             const transaction = semaphoreContract.verifyProof(
                 groupId,
@@ -301,6 +331,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
+                decryptables,
                 fullProof.proof
             )
 

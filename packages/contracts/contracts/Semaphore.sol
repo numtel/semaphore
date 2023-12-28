@@ -107,6 +107,7 @@ contract Semaphore is ISemaphore, SemaphoreGroups {
         uint256 nullifier,
         uint256 message,
         uint256 scope,
+        uint256[6] calldata decryptables,
         uint256[8] calldata proof
     ) external override onlyExistingGroup(groupId) {
         uint256 merkleTreeDepth = getMerkleTreeDepth(groupId);
@@ -141,7 +142,18 @@ contract Semaphore is ISemaphore, SemaphoreGroups {
                 [proof[0], proof[1]],
                 [[proof[2], proof[3]], [proof[4], proof[5]]],
                 [proof[6], proof[7]],
-                [merkleTreeRoot, nullifier, _hash(message), _hash(scope)]
+                [
+                  merkleTreeRoot,
+                  nullifier,
+                  decryptables[0],
+                  decryptables[1],
+                  decryptables[2],
+                  decryptables[3],
+                  _hash(message),
+                  _hash(scope),
+                  decryptables[4],
+                  decryptables[5]
+                ]
             )
         ) {
             revert Semaphore__InvalidProof();

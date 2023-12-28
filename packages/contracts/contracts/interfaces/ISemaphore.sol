@@ -91,6 +91,7 @@ interface ISemaphore {
         uint256 nullifier,
         uint256 message,
         uint256 scope,
+        uint256[6] calldata decryptables,
         uint256[8] calldata proof
     ) external;
 }

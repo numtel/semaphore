@@ -37,6 +37,7 @@
     "devDependencies": {
         "@ethersproject/strings": "^5.7.0",
         "@rollup/plugin-alias": "^5.1.0",
+        "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-json": "^5.0.1",
         "@types/download": "^8.0.5",
         "@types/tmp": "^0.2.6",

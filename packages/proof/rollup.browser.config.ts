@@ -1,4 +1,5 @@
 import alias from "@rollup/plugin-alias"
+import commonjs from '@rollup/plugin-commonjs'
 import json from "@rollup/plugin-json"
 import * as fs from "fs"
 import cleanup from "rollup-plugin-cleanup"
@@ -33,6 +34,7 @@ export default {
             useTsconfigDeclarationDir: true
         }),
         cleanup({ comments: "jsdoc" }),
+        commonjs(),
         json()
     ]
 }
