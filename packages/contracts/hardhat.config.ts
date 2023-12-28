@@ -15,7 +15,7 @@ import "./tasks/deploy-semaphore"
 dotenvConfig({ path: resolve(__dirname, "../../.env") })
 
 function getNetworks(): NetworksUserConfig {
-    if (!process.env.INFURA_API_KEY || !process.env.BACKEND_PRIVATE_KEY) {
+    if (!process.env.BACKEND_PRIVATE_KEY) {
         return {}
     }
 
@@ -31,6 +31,11 @@ function getNetworks(): NetworksUserConfig {
         sepolia: {
             url: `https://sepolia.infura.io/v3/${infuraApiKey}`,
             chainId: 11155111,
+            accounts
+        },
+        holesky: {
+            url: `https://ethereum-holesky.publicnode.com/`,
+            chainId: 17000,
             accounts
         },
         mumbai: {
@@ -81,7 +86,17 @@ const hardhatConfig: HardhatUserConfig = {
         target: "ethers-v5"
     },
     etherscan: {
-        apiKey: process.env.ETHERSCAN_API_KEY
+        apiKey: process.env.ETHERSCAN_API_KEY,
+        customChains: [
+          {
+            network: "holesky",
+            chainId: 17000,
+            urls: {
+              apiURL: "https://api-holesky.etherscan.io/api",
+              browserURL: "https://holesky.etherscan.io"
+            }
+          }
+        ]
     }
 }
 
