@@ -12,7 +12,8 @@
     "include": [
       "../../node_modules/circomlib/circuits",
       "../../node_modules/@zk-kit/circuits/circom",
-      "../../node_modules/ec-elgamal-circom/circuits"
+      "../../node_modules/ec-elgamal-circom/circuits",
+      ".."
     ],
     "groth16numContributions": 1,
     "groth16askForEntropy": false,

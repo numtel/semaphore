@@ -27,7 +27,7 @@
     "dependencies": {
         "@zk-kit/circuits": "0.2.3",
         "circomlib": "2.0.5",
-        "ec-elgamal-circom": "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub"
+        "ec-elgamal-circom": "numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4"
     },
     "devDependencies": {
         "@types/mocha": "^10.0.6",

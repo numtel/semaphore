@@ -8078,7 +8078,7 @@ __metadata:
     "@zk-kit/imt": ^2.0.0-beta
     circomkit: ^0.0.19
     circomlib: 2.0.5
-    ec-elgamal-circom: "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub"
+    ec-elgamal-circom: "numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4"
     mocha: ^10.2.0
     poseidon-lite: ^0.2.0
   languageName: unknown
@@ -8274,7 +8274,7 @@ __metadata:
     "@types/tmp": ^0.2.6
     "@zk-kit/groth16": 0.5.0
     download: ^8.0.0
-    ec-elgamal-circom: "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub"
+    ec-elgamal-circom: "numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4"
     poseidon-lite: ^0.2.0
     rimraf: ^5.0.5
     rollup: ^4.0.2
@@ -13015,6 +13015,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cli-progress@npm:^3.11.2":
+  version: 3.12.0
+  resolution: "cli-progress@npm:3.12.0"
+  dependencies:
+    string-width: ^4.2.3
+  checksum: e8390dc3cdf3c72ecfda0a1e8997bfed63a0d837f97366bbce0ca2ff1b452da386caed007b389f0fe972625037b6c8e7ab087c69d6184cc4dfc8595c4c1d3e6e
+  languageName: node
+  linkType: hard
+
 "cli-spinners@npm:^2.5.0, cli-spinners@npm:^2.6.1":
   version: 2.7.0
   resolution: "cli-spinners@npm:2.7.0"
@@ -13582,7 +13591,7 @@ __metadata:
     circomlib: ^2.0.2
     circomlibjs: ^0.1.7
     download: ^8.0.0
-    ec-elgamal-circom: "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub"
+    ec-elgamal-circom: "numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4"
     ethers: ^5.6.8
     hardhat: ^2.9.7
     hardhat-gas-reporter: ^1.0.8
@@ -15074,17 +15083,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ec-elgamal-circom@Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub":
+"ec-elgamal-circom@numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4":
   version: 2.0.0
-  resolution: "ec-elgamal-circom@https://github.com/Shigoto-dev19/ec-elgamal-circom.git#commit=481df284be69f7cb90d3cb4be32b86f0a6690afa"
+  resolution: "ec-elgamal-circom@https://github.com/numtel/ec-elgamal-circom.git#commit=cdb77c8647f0194a01967dd8257e3725bc36bcb4"
   dependencies:
     "@noble/curves": ^1.2.0
     circomlib: ^2.0.5
     circomlibjs: ^0.1.7
+    cli-progress: ^3.11.2
     ffjavascript: ^0.2.60
     fs: ^0.0.1-security
     snarkjs: ^0.5.0
-  checksum: 4382ea745bc2355089714b0ac6c89e753abd51510096c8d146d858a208dd4303b8a1d64a3be342f0c16184833808a87198ca393eeb70389ec9f3911f3f86125e
+  checksum: 1d361b58e889674e7f6e72205cab23f5c4268d26cf466c1c52888b254c380dca4b8ae3bf3b9e5660c3374c018beb0ddc6c888354556691dda0302ca64d153b95
   languageName: node
   linkType: hard
 

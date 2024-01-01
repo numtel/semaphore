@@ -57,7 +57,7 @@
         "@ethersproject/keccak256": "^5.7.0",
         "@zk-kit/groth16": "0.5.0",
         "download": "^8.0.0",
-        "ec-elgamal-circom": "Shigoto-dev19/ec-elgamal-circom#elgamal-baby-jubjub",
+        "ec-elgamal-circom": "numtel/ec-elgamal-circom#cdb77c8647f0194a01967dd8257e3725bc36bcb4",
         "tmp": "^0.2.1"
     }
 }
