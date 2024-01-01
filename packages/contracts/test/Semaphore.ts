@@ -2,11 +2,10 @@
 /* eslint-disable jest/valid-expect */
 import { Group } from "@semaphore-protocol/group"
 import { Identity } from "@semaphore-protocol/identity"
-import { SemaphoreProof, generateProof } from "@semaphore-protocol/proof"
+import { SemaphoreProof, generateProof, genKeypair } from "@semaphore-protocol/proof"
 import { expect } from "chai"
 import { Signer, constants } from "ethers"
 import { run } from "hardhat"
-import { genKeypair } from "ec-elgamal-circom/src";
 import { Semaphore } from "../build/typechain"
 import { createIdentityCommitments } from "./utils"
 
