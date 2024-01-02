@@ -1,6 +1,9 @@
 import { verify } from "@zk-kit/groth16"
 import { SemaphoreProof } from "./types"
 import unpackProof from "./unpack-proof"
+// Generate keys using:
+// $ yarn workspace @semaphore-protocol/circuits setup
+// Copy from packages/circuits/build/semaphore/groth16_vkey.json
 import verificationKeys from "./verification-keys.json"
 import hash from "./hash"
 
@@ -17,8 +20,8 @@ export default function verifyProof({ treeRoot, nullifier, message, scope, publi
 
     const verificationKey = {
         ...verificationKeys,
-        vk_delta_2: verificationKeys.vk_delta_2[0],
-        IC: verificationKeys.IC[0]
+//         vk_delta_2: verificationKeys.vk_delta_2[0],
+//         IC: verificationKeys.IC[0]
     }
 
     return verify(verificationKey, {
