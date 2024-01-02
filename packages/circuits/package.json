@@ -17,7 +17,7 @@
     },
     "scripts": {
         "compile": "circomkit compile semaphore",
-        "contract": "circomkit contract semaphore",
+        "contract": "mkdir -p node_modules/snarkjs/templates/ && cp ../../node_modules/snarkjs/templates/verifier_groth16.sol.ejs node_modules/snarkjs/templates/ && circomkit contract semaphore",
         "setup": "circomkit setup semaphore",
         "test": "mocha"
     },
