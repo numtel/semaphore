@@ -2,6 +2,12 @@
 
 This is a fork of [Semaphore v4](https://github.com/semaphore-protocol/semaphore/tree/feat/semaphore-v4/) with the proofs able to be decrypted by a single private key using [stark-friendly asymmetric ElGamal encryption](https://github.com/Shigoto-dev19/ec-elgamal-circom).
 
+### Deployed Contracts
+
+Network | Contract
+--------|-----------
+Holesky | [0x3957e9872985b8450b41566b4104006a1969cf1c](https://holesky.etherscan.io/address/0x3957e9872985b8450b41566b4104006a1969cf1c)
+
 ## 🛠 Install
 
 Clone this repository:
