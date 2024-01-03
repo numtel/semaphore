@@ -2,6 +2,8 @@
 
 This is a fork of [Semaphore v4](https://github.com/semaphore-protocol/semaphore/tree/feat/semaphore-v4/) with the proofs able to be decrypted by a single private key using [stark-friendly asymmetric ElGamal encryption](https://github.com/Shigoto-dev19/ec-elgamal-circom).
 
+Get started with the [example app](https://github.com/numtel/semaphore-decryptable-example)!
+
 ### Deployed Contracts
 
 Network | Contract
