@@ -40,6 +40,7 @@ interface ISemaphore {
         uint256 nullifier,
         uint256 message,
         uint256 indexed scope,
+        uint256[6] decryptables,
         uint256[8] proof
     );
 

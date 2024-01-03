@@ -12,7 +12,7 @@ import hash from "./hash"
  * @param fullProof The SnarkJS Semaphore proof.
  * @returns True if the proof is valid, false otherwise.
  */
-export default function verifyProof({ treeRoot, nullifier, message, scope, publicKey, ephemeralKey, encryptedMessage, proof }: SemaphoreProof): Promise<boolean> {
+export default function verifyProof({ treeRoot, nullifier, message, scope, decryptables, proof }: SemaphoreProof): Promise<boolean> {
     // TODO: support all tree depths after trusted-setup.
     // if (treeDepth < 1 || treeDepth > 32) {
     // throw new TypeError("The tree depth must be a number between 1 and 32")
@@ -28,14 +28,14 @@ export default function verifyProof({ treeRoot, nullifier, message, scope, publi
         publicSignals: [
           treeRoot,
           nullifier,
-          ephemeralKey[0],
-          ephemeralKey[1],
-          encryptedMessage[0],
-          encryptedMessage[1],
+          decryptables[0],
+          decryptables[1],
+          decryptables[2],
+          decryptables[3],
           hash(message),
           hash(scope),
-          publicKey.x.toString(),
-          publicKey.y.toString(),
+          decryptables[4].toString(),
+          decryptables[5].toString(),
         ],
         proof: unpackProof(proof)
     })

@@ -4,7 +4,7 @@ import { Group } from "@semaphore-protocol/group"
 import type { Identity } from "@semaphore-protocol/identity"
 import { NumericString, prove } from "@zk-kit/groth16"
 import { encrypt } from "ec-elgamal-circom/src";
-import { encode } from "ec-elgamal-circom/utils/decode";
+import { encode } from "ec-elgamal-circom/utils/encode";
 import getSnarkArtifacts from "./get-snark-artifacts.node"
 import hash from "./hash"
 import packProof from "./pack-proof"
@@ -81,11 +81,16 @@ export default async function generateProof(
     return {
         treeRoot: publicSignals[0],
         nullifier: publicSignals[1],
-        ephemeralKey: [publicSignals[2], publicSignals[3]],
-        encryptedMessage: [publicSignals[4], publicSignals[5]],
         message: BigNumber.from(message).toString() as NumericString,
         scope: BigNumber.from(scope).toString() as NumericString,
-        publicKey,
+        decryptables: [
+          publicSignals[2],
+          publicSignals[3],
+          publicSignals[4],
+          publicSignals[5],
+          publicKey.x.toString(),
+          publicKey.y.toString(),
+        ],
         proof: packProof(proof)
     }
 }

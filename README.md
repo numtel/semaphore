@@ -6,7 +6,7 @@ This is a fork of [Semaphore v4](https://github.com/semaphore-protocol/semaphore
 
 Network | Contract
 --------|-----------
-Holesky | [0x3957e9872985b8450b41566b4104006a1969cf1c](https://holesky.etherscan.io/address/0x3957e9872985b8450b41566b4104006a1969cf1c)
+Holesky | [0xe2373e512ef8d693490010ea9dbc35b7b75edd38](https://holesky.etherscan.io/address/0xe2373e512ef8d693490010ea9dbc35b7b75edd38)
 
 ## 🛠 Install
 

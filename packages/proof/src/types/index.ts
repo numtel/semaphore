@@ -11,12 +11,19 @@ export type SemaphoreProof = {
     treeRoot: NumericString
     message: NumericString
     nullifier: NumericString
-    ephemeralKey: any
-    encryptedMessage: any
-    publicKey: any
     scope: NumericString
+    decryptables: Decryptables
     proof: PackedProof
 }
+
+export type Decryptables = [
+    NumericString,
+    NumericString,
+    NumericString,
+    NumericString,
+    NumericString,
+    NumericString
+]
 
 export type PackedProof = [
     NumericString,

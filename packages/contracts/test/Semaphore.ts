@@ -215,20 +215,11 @@ describe("Semaphore", () => {
         group.addMembers(members)
 
         let fullProof: SemaphoreProof
-        let decryptables
 
         before(async () => {
             await semaphoreContract.addMembers(groupId, [members[1], members[2]])
 
             fullProof = await generateProof(identity, group, message, group.root as string, ecKeypair.pubKey, 20)
-            decryptables = [
-              fullProof.ephemeralKey[0],
-              fullProof.ephemeralKey[1],
-              fullProof.encryptedMessage[0],
-              fullProof.encryptedMessage[1],
-              fullProof.publicKey.x,
-              fullProof.publicKey.y,
-            ]
         })
 
         it("Should not verify a proof if the group does not exist", async () => {
@@ -238,7 +229,7 @@ describe("Semaphore", () => {
               0,
               message,
               0,
-              decryptables,
+              fullProof.decryptables,
               [0, 0, 0, 0, 0, 0, 0, 0]
             )
 
@@ -252,7 +243,7 @@ describe("Semaphore", () => {
               0,
               message,
               0,
-              decryptables,
+              fullProof.decryptables,
               [0, 0, 0, 0, 0, 0, 0, 0]
             )
 
@@ -269,7 +260,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 0,
-                decryptables,
+                fullProof.decryptables,
                 fullProof.proof
             )
 
@@ -283,7 +274,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
-                decryptables,
+                fullProof.decryptables,
                 fullProof.proof
             )
 
@@ -295,6 +286,7 @@ describe("Semaphore", () => {
                     fullProof.nullifier,
                     fullProof.message,
                     fullProof.treeRoot,
+                    fullProof.decryptables,
                     fullProof.proof
                 )
         })
@@ -306,7 +298,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
-                decryptables,
+                fullProof.decryptables,
                 fullProof.proof
             )
 
@@ -330,7 +322,7 @@ describe("Semaphore", () => {
                 fullProof.nullifier,
                 fullProof.message,
                 fullProof.treeRoot,
-                decryptables,
+                fullProof.decryptables,
                 fullProof.proof
             )
 

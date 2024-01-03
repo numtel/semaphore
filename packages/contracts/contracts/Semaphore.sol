@@ -110,9 +110,9 @@ contract Semaphore is ISemaphore, SemaphoreGroups {
         uint256[6] calldata decryptables,
         uint256[8] calldata proof
     ) external override onlyExistingGroup(groupId) {
-        uint256 merkleTreeDepth = getMerkleTreeDepth(groupId);
+        uint256 merkleTreeSize = getMerkleTreeSize(groupId);
 
-        if (merkleTreeDepth == 0) {
+        if (merkleTreeSize == 0) {
             revert Semaphore__GroupHasNoMembers();
         }
 
@@ -161,7 +161,15 @@ contract Semaphore is ISemaphore, SemaphoreGroups {
 
         groups[groupId].nullifiers[nullifier] = true;
 
-        emit ProofVerified(groupId, merkleTreeRoot, nullifier, message, scope, proof);
+        emit ProofVerified(
+          groupId,
+          merkleTreeRoot,
+          nullifier,
+          message,
+          scope,
+          decryptables,
+          proof
+        );
     }
 
     /// @dev Creates a keccak256 hash of a message compatible with the SNARK scalar modulus.
